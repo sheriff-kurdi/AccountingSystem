@@ -47,7 +47,11 @@ namespace AccountingSystem.Web
             services.AddSingleton<AccountingCalcForBalance>();
 
             services.AddScoped<TransactionsEntriesService>();
+            services.AddScoped<BalanceService>();
+
             services.AddScoped<ITransactionRepo, SqlTransactionRepo>();
+            services.AddScoped<IBalanceRepo, SqlBalanceRepo>();
+
 
 
         }

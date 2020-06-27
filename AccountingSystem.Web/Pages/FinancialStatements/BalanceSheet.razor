@@ -1,0 +1,26 @@
+﻿@page "/balanceSheet"
+@if (Balance == null)
+{
+
+}
+else
+{
+    <h1>@Balance.Cash</h1>
+}
+
+@code {
+    [Inject]
+    public AccountingSystem.Core.IRepo.IBalanceRepo balanceRepo { get; set; }
+    public Balance Balance { get; set; }
+
+    public void getLastBalance()
+    {
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Balance = await balanceRepo.GetLastBalance();
+    }
+
+
+}

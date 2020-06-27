@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using AccountingSystem.Core.Entities;
 using AccountingSystem.Core.Enums;
 using AccountingSystem.Core.IRepo;
+using AccountingSystem.Service.Balances;
 
 namespace AccountingSystem.Service.Transactions
 {
     public class TransactionsEntriesService
     {
         private readonly ITransactionRepo transactionRepo;
+        private readonly BalanceService balanceService;
 
-        public TransactionsEntriesService(ITransactionRepo transactionRepo)
+        public TransactionsEntriesService(ITransactionRepo transactionRepo, BalanceService balanceService)
         {
             this.transactionRepo = transactionRepo;
+            this.balanceService = balanceService;
         }
 
-        public void CreateTransaction(Transaction transaction)
+        public async Task CreateTransaction(Transaction transaction)
         {
             // calc A/R Or A/P
             if (transaction.DrTransactionEntryValue > transaction.CrTransactionEntryValue)
@@ -33,20 +37,11 @@ namespace AccountingSystem.Service.Transactions
 
             transaction.Date = DateTime.Now;
 
-            //Console.WriteLine(nameof(transaction.Description));
 
-            //string DrTransactionFromEnum = Enum.GetName(typeof(PossibleTransactions), 2);
-            //Console.WriteLine(DrTransactionFromEnum);
+            await transactionRepo.Create(transaction);
 
-            //Console.WriteLine(transaction.DrTransactionEntry);
-
-
-
-            //TODO Date for calculating intrest
-            //auto calculated VS manual calculate on cash flow
-
-            transactionRepo.Create(transaction);
-
+            await balanceService.UpdateLastBalance(transaction);
+       
             // Add To database
         }
     }

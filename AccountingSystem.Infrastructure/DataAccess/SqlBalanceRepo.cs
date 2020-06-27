@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AccountingSystem.Infrastructure.DataAccess
 {
-    class SqlBalanceRepo : IBalanceRepo
+    public class SqlBalanceRepo : IBalanceRepo
     {
         private readonly ApplicationDbContext db;
 
@@ -21,11 +21,14 @@ namespace AccountingSystem.Infrastructure.DataAccess
         public async Task Create(Balance balance)
         {
             await db.Balances.AddAsync(balance);
+            await db.SaveChangesAsync();
         }
 
         public async Task<Balance> GetLastBalance()
         {
-            return await db.Balances.LastOrDefaultAsync();
+            return await db.Balances
+                .OrderByDescending(b => b.Id)
+                .FirstOrDefaultAsync();
         }
 
         public async Task Update(Balance balance)

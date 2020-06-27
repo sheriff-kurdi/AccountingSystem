@@ -93,13 +93,18 @@
     public TransactionsEntriesService transactionsEntriesService { get; set; }
     [Inject]
     public NavigationManager Navigation { get; set; }
+    [Inject]
+    public AccountingSystem.Service.Balances.BalanceService BalanceService { get; set; }
 
     private AccountingSystem.Core.Entities.Transaction transaction { get; set; } = new Transaction();
 
 
-    private void HandleValidSubmit()
+    private  void  HandleValidSubmit()
     {
+        //Create transaction
         transactionsEntriesService.CreateTransaction(transaction);
+        //Update Balance Sheet
+     
         Navigation.NavigateTo("/");
 
     }

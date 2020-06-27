@@ -4,6 +4,7 @@ using AccountingSystem.Core.IRepo;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AccountingSystem.Service.Balances
 {
@@ -23,22 +24,25 @@ namespace AccountingSystem.Service.Balances
       
     
         
-        public void UpdateLastBalance()
+        public async Task UpdateLastBalance(Transaction transaction)
         {
+            
             //get last balance
-            Balance lastBalance = balanceRepo.GetLastBalance().Result;
-            //get all transactions
-            IEnumerable<Transaction> transactions = transactionRepo.GetAll().Result;
+            Balance lastBalance = await balanceRepo.GetLastBalance();
+
+            //get all transactions onlu if you want to calc for all table transactions
+            //IEnumerable<Transaction> transactions = transactionRepo.GetAll().Result;
+
             //Edit last balance
-            accountingCalcForBalance.EditLastBalance(transactions, lastBalance);
+            lastBalance = accountingCalcForBalance.EditLastBalance(transaction, lastBalance);
             //Send Updated Balance to database
-            balanceRepo.Update(lastBalance);
+            await balanceRepo.Update(lastBalance);
         }
 
-        public void CreateNewBalance(Balance balance)
+        public async Task CreateNewBalance(Balance balance)
         {
             balance.Date = DateTime.Now;
-            balanceRepo.Create(balance);
+            await balanceRepo.Create(balance);
 
         }
 
@@ -46,12 +50,3 @@ namespace AccountingSystem.Service.Balances
     }
 }
 
-
-  //foreach (var possibleTransaction in Enum.GetNames(typeof(PossibleTransactions)))
-  //              {
-  //                  //make it dynamic for all possible transactions
-  //                  if (transaction.DrTransactionEntry.ToString() == possibleTransaction)
-  //                  {
-  //                      lastBalance.Cash += transaction.DrTransactionEntryValue;
-  //                  }
-  //              }
