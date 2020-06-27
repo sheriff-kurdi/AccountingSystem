@@ -15,6 +15,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AccountingSystem.Web.Areas.Identity;
 using AccountingSystem.Web.Data;
+using AccountingSystem.Service.Transactions;
+using AccountingSystem.Infrastructure.DataAccess;
+using AccountingSystem.Core.IRepo;
+using AccountingSystem.Service.Balances;
 
 namespace AccountingSystem.Web
 {
@@ -40,6 +44,12 @@ namespace AccountingSystem.Web
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<AccountingCalcForBalance>();
+
+            services.AddScoped<TransactionsEntriesService>();
+            services.AddScoped<ITransactionRepo, SqlTransactionRepo>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

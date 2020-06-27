@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AccountingSystem.Core.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace AccountingSystem.Web.Data
+namespace AccountingSystem.Infrastructure.DataAccess
 {
     public class ApplicationDbContext : IdentityDbContext
     {
@@ -12,5 +13,8 @@ namespace AccountingSystem.Web.Data
             : base(options)
         {
         }
+
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Balance> Balances { get; set; }
     }
 }
