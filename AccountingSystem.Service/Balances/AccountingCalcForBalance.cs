@@ -116,9 +116,37 @@ namespace AccountingSystem.Service.Balances
             return lastBalance;
 
         }
+        public Balance CalculateTotalBalance(Balance balance)
+        {
+            balance.TotalAsset = balance.Cash + balance.AccountRecevable + balance.Building
+            + balance.Land + balance.Equipments + balance.Goods;
+
+            balance.TotallLiabilityAndEquity = balance.Capital + balance.AccountPyable
+                + balance.SalaryPyable;
+            return balance;
+        }
+
+        public Balance handleAccPyapleAndAccRecevable(Balance balance, Transaction transaction)
+        {
+
+            balance.AccountPyable = transaction.AccountPyable;
+            balance.AccountRecevable = transaction.AccountReceivable;
+            return balance;
+        }
+
         public Balance EditLastBalance(Transaction transaction, Balance lastBalance)
         {
             lastBalance.Date = DateTime.Now;
+
+            //handle A/P & A/R
+            lastBalance.AccountPyable = handleAccPyapleAndAccRecevable(lastBalance, transaction).AccountPyable;
+            lastBalance.AccountRecevable = handleAccPyapleAndAccRecevable(lastBalance, transaction).AccountRecevable;
+            //.....
+
+            // calc balace Totall
+            lastBalance.TotalAsset = CalculateTotalBalance(lastBalance).TotalAsset;
+            lastBalance.TotallLiabilityAndEquity = CalculateTotalBalance(lastBalance).TotallLiabilityAndEquity;
+            //...............
 
             // if you wanna edit balance in every transaction
             lastBalance =  HandleDebitEntriesForBalance(transaction, lastBalance);
@@ -136,5 +164,7 @@ namespace AccountingSystem.Service.Balances
 
             return lastBalance;
         }
+
+   
     }
 }

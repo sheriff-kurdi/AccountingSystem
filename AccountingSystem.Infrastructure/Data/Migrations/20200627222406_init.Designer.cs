@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccountingSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200627155930_balance")]
-    partial class balance
+    [Migration("20200627222406_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,9 @@ namespace AccountingSystem.Infrastructure.Migrations
                     b.Property<double>("Cash")
                         .HasColumnType("float");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("date");
+
                     b.Property<double>("Equipments")
                         .HasColumnType("float");
 
@@ -58,9 +61,34 @@ namespace AccountingSystem.Infrastructure.Migrations
                     b.Property<double>("SalaryPyable")
                         .HasColumnType("float");
 
+                    b.Property<double>("TotalAsset")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotallLiabilityAndEquity")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.ToTable("Balances");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccountPyable = 0.0,
+                            AccountRecevable = 0.0,
+                            Building = 0.0,
+                            Capital = 0.0,
+                            Cash = 0.0,
+                            Date = new DateTime(2020, 6, 28, 0, 24, 5, 836, DateTimeKind.Local).AddTicks(5632),
+                            Equipments = 0.0,
+                            Goods = 0.0,
+                            Land = 0.0,
+                            Loans = 0.0,
+                            SalaryPyable = 0.0,
+                            TotalAsset = 0.0,
+                            TotallLiabilityAndEquity = 0.0
+                        });
                 });
 
             modelBuilder.Entity("AccountingSystem.Core.Entities.Transaction", b =>

@@ -59,6 +59,12 @@ namespace AccountingSystem.Infrastructure.Migrations
                     b.Property<double>("SalaryPyable")
                         .HasColumnType("float");
 
+                    b.Property<double>("TotalAsset")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotallLiabilityAndEquity")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.ToTable("Balances");
@@ -72,12 +78,14 @@ namespace AccountingSystem.Infrastructure.Migrations
                             Building = 0.0,
                             Capital = 0.0,
                             Cash = 0.0,
-                            Date = new DateTime(2020, 6, 27, 21, 16, 45, 652, DateTimeKind.Local).AddTicks(418),
+                            Date = new DateTime(2020, 6, 28, 0, 24, 5, 836, DateTimeKind.Local).AddTicks(5632),
                             Equipments = 0.0,
                             Goods = 0.0,
                             Land = 0.0,
                             Loans = 0.0,
-                            SalaryPyable = 0.0
+                            SalaryPyable = 0.0,
+                            TotalAsset = 0.0,
+                            TotallLiabilityAndEquity = 0.0
                         });
                 });
 

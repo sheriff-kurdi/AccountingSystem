@@ -29,6 +29,15 @@ namespace AccountingSystem.Core.Entities
         //Owner's Equity
         public double Capital { get; set; }
 
+        //total
+        public double TotalAsset { get; set; }
+     
+        public double TotallLiabilityAndEquity { get; set; }
+
+
+
+
+
 
 
     }

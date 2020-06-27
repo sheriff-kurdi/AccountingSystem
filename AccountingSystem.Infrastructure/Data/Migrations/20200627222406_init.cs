@@ -47,6 +47,31 @@ namespace AccountingSystem.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Balances",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(type: "date", nullable: false),
+                    Cash = table.Column<double>(nullable: false),
+                    AccountRecevable = table.Column<double>(nullable: false),
+                    Goods = table.Column<double>(nullable: false),
+                    Equipments = table.Column<double>(nullable: false),
+                    Land = table.Column<double>(nullable: false),
+                    Building = table.Column<double>(nullable: false),
+                    AccountPyable = table.Column<double>(nullable: false),
+                    SalaryPyable = table.Column<double>(nullable: false),
+                    Loans = table.Column<double>(nullable: false),
+                    Capital = table.Column<double>(nullable: false),
+                    TotalAsset = table.Column<double>(nullable: false),
+                    TotallLiabilityAndEquity = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Balances", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new
                 {
@@ -172,6 +197,11 @@ namespace AccountingSystem.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Balances",
+                columns: new[] { "Id", "AccountPyable", "AccountRecevable", "Building", "Capital", "Cash", "Date", "Equipments", "Goods", "Land", "Loans", "SalaryPyable", "TotalAsset", "TotallLiabilityAndEquity" },
+                values: new object[] { 1, 0.0, 0.0, 0.0, 0.0, 0.0, new DateTime(2020, 6, 28, 0, 24, 5, 836, DateTimeKind.Local).AddTicks(5632), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -228,6 +258,9 @@ namespace AccountingSystem.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Balances");
 
             migrationBuilder.DropTable(
                 name: "Transactions");
