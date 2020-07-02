@@ -1,87 +1,87 @@
 ﻿@page "/createTransaction"
 
-    <EditForm Model="@transaction" OnValidSubmit=@HandleValidSubmit>
+<EditForm Model="@transaction" OnValidSubmit=@HandleValidSubmit>
 
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
-        <h3>CreateTransaction</h3>
-        <hr />
-        <div class="form-group row">
-            <label for="Description" class="col-sm-2 col-form-label">
-                Description
-            </label>
-            <div class="col-sm-10">
-                <InputText id="Description" class="form-control" placeholder="Description"
-                             @bind-Value="transaction.Description" />
-                <ValidationMessage For="@(()=> transaction.Description)" />
-            </div>
+    <h3>CreateTransaction</h3>
+    <hr />
+    <div class="form-group row">
+        <label for="Description" class="col-sm-2 col-form-label">
+            Description
+        </label>
+        <div class="col-sm-10">
+            <InputText id="Description" class="form-control" placeholder="Description"
+                       @bind-Value="transaction.Description" />
+            <ValidationMessage For="@(()=> transaction.Description)" />
         </div>
+    </div>
 
-        <div class="form-group row">
-            <label for="DrValue" class="col-sm-2 col-form-label">
-                DrValue
-            </label>
-            <div class="col-sm-10">
-                <InputNumber id="DrValue" class="form-control" placeholder="DrValue"
-                             @bind-Value="transaction.DrTransactionEntryValue" />
-                <ValidationMessage For="@(()=> transaction.DrTransactionEntryValue)" />
-            </div>
+    <div class="form-group row">
+        <label for="DrValue" class="col-sm-2 col-form-label">
+            DrValue
+        </label>
+        <div class="col-sm-10">
+            <InputNumber id="DrValue" class="form-control" placeholder="DrValue"
+                         @bind-Value="transaction.DrTransactionEntryValue" />
+            <ValidationMessage For="@(()=> transaction.DrTransactionEntryValue)" />
         </div>
+    </div>
 
-        <div class="form-group row">
-            <label for="DrTransaction" class="col-sm-2 col-form-label">
-                DrTransaction
-            </label>
-            <div class="col-sm-10">
+    <div class="form-group row">
+        <label for="DrTransaction" class="col-sm-2 col-form-label">
+            DrTransaction
+        </label>
+        <div class="col-sm-10">
 
-                <InputSelect id="DrTransaction" @bind-Value="transaction.DrTransactionEntry" class="form-control">
-                    @foreach (var possibleTransactions in Enum.GetValues(typeof(PossibleTransactions)))
-                    {
-                        <option value="@possibleTransactions">@possibleTransactions</option>
-                    }
-                    /**/
-                    /**/
+            <InputSelect id="DrTransaction" @bind-Value="transaction.DrTransactionEntry" class="form-control">
+                @foreach (var possibleTransactions in Enum.GetValues(typeof(PossibleTransactions)))
+                {
+                    <option value="@possibleTransactions">@possibleTransactions</option>
+                }
+                /**/
+                /**/
 
-                </InputSelect>
+            </InputSelect>
 
-            </div>
         </div>
+    </div>
 
-        <div class="form-group row">
-            <label for="CrValue" class="col-sm-2 col-form-label">
-                CrValue
-            </label>
-            <div class="col-sm-10">
-                <InputNumber id="CrValue" class="form-control" placeholder="CrValue"
-                             @bind-Value="transaction.CrTransactionEntryValue" />
-                <ValidationMessage For="@(()=> transaction.CrTransactionEntryValue)" />
-            </div>
+    <div class="form-group row">
+        <label for="CrValue" class="col-sm-2 col-form-label">
+            CrValue
+        </label>
+        <div class="col-sm-10">
+            <InputNumber id="CrValue" class="form-control" placeholder="CrValue"
+                         @bind-Value="transaction.CrTransactionEntryValue" />
+            <ValidationMessage For="@(()=> transaction.CrTransactionEntryValue)" />
         </div>
+    </div>
 
-        <div class="form-group row">
-            <label for="CrTransaction" class="col-sm-2 col-form-label">
-                CrTransaction
-            </label>
-            <div class="col-sm-10">
+    <div class="form-group row">
+        <label for="CrTransaction" class="col-sm-2 col-form-label">
+            CrTransaction
+        </label>
+        <div class="col-sm-10">
 
-                <InputSelect id="CrTransaction" @bind-Value="transaction.CrTransactionEntry" class="form-control">
-                    @foreach (var possibleTransactions in Enum.GetValues(typeof(PossibleTransactions)))
-                    {
-                        <option value="@possibleTransactions">@possibleTransactions</option>
-                    }
-                    /**/
-                    /**/
+            <InputSelect id="CrTransaction" @bind-Value="transaction.CrTransactionEntry" class="form-control">
+                @foreach (var possibleTransactions in Enum.GetValues(typeof(PossibleTransactions)))
+                {
+                    <option value="@possibleTransactions">@possibleTransactions</option>
+                }
+                /**/
+                /**/
 
-                </InputSelect>
+            </InputSelect>
 
-            </div>
         </div>
+    </div>
 
 
-        <button type="submit" class="btn btn-primary "> Create Transaction </button>
+    <button type="submit" class="btn btn-primary "> Create Transaction </button>
 
-    </EditForm>
+</EditForm>
 
 
 
@@ -99,13 +99,15 @@
     private AccountingSystem.Core.Entities.Transaction transaction { get; set; } = new Transaction();
 
 
-    private  void  HandleValidSubmit()
+    private async Task HandleValidSubmit()
     {
-        //Create transaction
-        transactionsEntriesService.CreateTransaction(transaction);
         //Update Balance Sheet
-     
-        Navigation.NavigateTo("/");
+        //Update IncomeStatment
+        await transactionsEntriesService.CreateTransaction(transaction);
+
+
+
+        Navigation.NavigateTo("/balanceSheet");
 
     }
 }

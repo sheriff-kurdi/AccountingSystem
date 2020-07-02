@@ -16,10 +16,14 @@ namespace AccountingSystem.Infrastructure.DataAccess
 
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Balance> Balances { get; set; }
+        public DbSet<IncomeStatment> IncomeStatments { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+
             modelBuilder.Entity<Balance>().HasData(
                 new Balance
                 {
@@ -37,7 +41,22 @@ namespace AccountingSystem.Infrastructure.DataAccess
                     Id = 1
                 });
 
+            modelBuilder.Entity<IncomeStatment>().HasData(
+            new IncomeStatment
+            {
+                Id = 1,
+                Advertising = 0,
+                Date = DateTime.Now,
+                Rent = 0,
+                Salary = 0,
+                SalesRevenue = 0,
+                Utilities = 0,
+                Totall = 0
+            });
+
         }
+
+
 
     }
 }

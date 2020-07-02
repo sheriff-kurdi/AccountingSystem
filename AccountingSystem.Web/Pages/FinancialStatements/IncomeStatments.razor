@@ -1,0 +1,51 @@
+﻿@page "/incomeStatment"
+
+<button @onclick="incomeStatmentService.CreateNewIncomeStatment"> Create new income statment</button>
+
+<center> Company </center>
+<center> Income Statment </center>
+<center> @IncomeStatment.Date </center>
+<hr />
+<br />
+
+
+<h2> Revenues </h2>
+<h4> Sales Revenue  <b>@IncomeStatment.SalesRevenue</b></h4>
+
+<h2> Expenses </h2>
+<h4> Rent <b>@IncomeStatment.Rent</b></h4>
+<h4> Salary <b>@IncomeStatment.Salary</b></h4>
+<h4> Utilities <b>@IncomeStatment.Utilities</b></h4>
+
+@if (IncomeStatment.Totall >= 0)
+{
+    <h4> Net Income <b>@IncomeStatment.Totall</b></h4>
+
+}
+
+@if (IncomeStatment.Totall < 0)
+{
+    <h4> Net Loss <b>@IncomeStatment.Totall</b></h4>
+
+}
+
+
+
+
+@code{
+    [Inject]
+    public AccountingSystem.Core.IRepo.IIncomeStatmentRepo incomeStatmentRepo { get; set; }
+    [Inject]
+    public AccountingSystem.Service.IncomeStatments.IncomeStatmentService incomeStatmentService { get; set; }
+
+    public IncomeStatment IncomeStatment { get; set; } = new IncomeStatment();
+    protected override async Task OnInitializedAsync()
+    {
+        IncomeStatment = await incomeStatmentRepo.GetLastIncomeStatment();
+    }
+
+
+
+
+
+}

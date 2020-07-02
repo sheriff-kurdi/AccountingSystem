@@ -17,7 +17,7 @@ namespace AccountingSystem.Core.Enums
         //Liabilities
         AccountPyable,
         SalaryPyable,
-        Loans,
+        //Loans,
 
         //Owner's Equity
         Capital

@@ -8,7 +8,7 @@ namespace AccountingSystem.Service.Balances
 {
     public class AccountingCalcForBalance
     {
-        public Balance HandleCreditEntriesForBalance( Transaction transaction, Balance lastBalance)
+        public Balance HandleCreditEntriesForBalance( Transaction transaction, Balance lastBalance )
         {
 
             //Credit
@@ -31,6 +31,7 @@ namespace AccountingSystem.Service.Balances
             }
             if (transaction.CrTransactionEntry == PossibleTransactions.Goods)
             {
+
                 lastBalance.Goods -= transaction.CrTransactionEntryValue;
             }
             if (transaction.CrTransactionEntry == PossibleTransactions.Land)
@@ -44,10 +45,10 @@ namespace AccountingSystem.Service.Balances
             {
                 lastBalance.AccountPyable += transaction.CrTransactionEntryValue;
             }
-            if (transaction.CrTransactionEntry == PossibleTransactions.Loans)
-            {
-                lastBalance.Loans += transaction.CrTransactionEntryValue;
-            }
+            //if (transaction.CrTransactionEntry == PossibleTransactions.Loans)
+            //{
+            //    lastBalance.Loans += transaction.CrTransactionEntryValue;
+            //}
             if (transaction.CrTransactionEntry == PossibleTransactions.SalaryPyable)
             {
                 lastBalance.SalaryPyable += transaction.CrTransactionEntryValue;
@@ -97,10 +98,10 @@ namespace AccountingSystem.Service.Balances
             {
                 lastBalance.AccountPyable -= transaction.DrTransactionEntryValue;
             }
-            if (transaction.DrTransactionEntry == PossibleTransactions.Loans)
-            {
-                lastBalance.Loans -= transaction.DrTransactionEntryValue;
-            }
+            //if (transaction.DrTransactionEntry == PossibleTransactions.Loans)
+            //{
+            //    lastBalance.Loans -= transaction.DrTransactionEntryValue;
+            //}
             if (transaction.DrTransactionEntry == PossibleTransactions.SalaryPyable)
             {
                 lastBalance.SalaryPyable -= transaction.DrTransactionEntryValue;
@@ -122,12 +123,9 @@ namespace AccountingSystem.Service.Balances
             + balance.Land + balance.Equipments + balance.Goods;
 
             balance.TotallLiabilityAndEquity = balance.Capital + balance.AccountPyable
-                + balance.SalaryPyable;
+                + balance.SalaryPyable ;
             return balance;
         }
-
-    
-
         public Balance EditLastBalance(Transaction transaction, Balance lastBalance)
         {
             lastBalance.Date = DateTime.Now;
@@ -145,7 +143,6 @@ namespace AccountingSystem.Service.Balances
             lastBalance.TotalAsset = CalculateTotalBalance(lastBalance).TotalAsset;
             lastBalance.TotallLiabilityAndEquity = CalculateTotalBalance(lastBalance).TotallLiabilityAndEquity;
             //...............
-
           
 
             //if you wanna create balance for whole old transactions

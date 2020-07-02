@@ -5,7 +5,7 @@
 }
 else
 {
-    <span @onclick="CreateNewBalace" class="oi oi-plus" aria-hidden="true">  New Balance Sheet </span>
+    <span @onclick="CreateNewBalace" class="oi oi-plus" aria-hidden="true">  new balance sheet </span>
 
 <center> Company </center>
 <center> Balance Sheet </center>
@@ -50,6 +50,8 @@ else
                 <h4>Total Assets.... @Balance.TotalAsset</h4>
             </div>
 
+            <br /><br />
+
         </div>
 
 
@@ -64,9 +66,12 @@ else
             <div class="row">
                 <h4>Account Pyable.... @Balance.AccountPyable</h4>
             </div>
-            <div class="row">
-                <h4>Salary Pyable.... @Balance.SalaryPyable</h4>
-            </div>
+ 
+            @*<div class="row">
+                <h4>Loans.... @Balance.Loans</h4>
+            </div>*@
+
+
 
 
 
@@ -110,7 +115,7 @@ else
 
     public async Task CreateNewBalace()
     {
-        //TODO You can pass the old balance for continuas data or and brand new one and clear all transactions
+        // You can pass the old balance for continuas data or and brand new one and clear all transactions
         Balance balance = new Balance()
         {
             AccountPyable = 0,

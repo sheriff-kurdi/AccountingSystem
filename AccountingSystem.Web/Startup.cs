@@ -19,6 +19,7 @@ using AccountingSystem.Service.Transactions;
 using AccountingSystem.Infrastructure.DataAccess;
 using AccountingSystem.Core.IRepo;
 using AccountingSystem.Service.Balances;
+using AccountingSystem.Service.IncomeStatments;
 
 namespace AccountingSystem.Web
 {
@@ -44,13 +45,20 @@ namespace AccountingSystem.Web
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddSingleton<WeatherForecastService>();
+
             services.AddSingleton<AccountingCalcForBalance>();
+            services.AddSingleton<AccountingCalcForIncomeStatment>();
+
 
             services.AddScoped<TransactionsEntriesService>();
             services.AddScoped<BalanceService>();
+            services.AddScoped<IncomeStatmentService>();
+
 
             services.AddScoped<ITransactionRepo, SqlTransactionRepo>();
             services.AddScoped<IBalanceRepo, SqlBalanceRepo>();
+            services.AddScoped<IIncomeStatmentRepo, SqlIncomeStatmentRepo>();
+
 
 
 

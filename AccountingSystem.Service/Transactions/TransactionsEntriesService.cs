@@ -6,6 +6,7 @@ using AccountingSystem.Core.Entities;
 using AccountingSystem.Core.Enums;
 using AccountingSystem.Core.IRepo;
 using AccountingSystem.Service.Balances;
+using AccountingSystem.Service.IncomeStatments;
 
 namespace AccountingSystem.Service.Transactions
 {
@@ -13,11 +14,13 @@ namespace AccountingSystem.Service.Transactions
     {
         private readonly ITransactionRepo transactionRepo;
         private readonly BalanceService balanceService;
+        private readonly IncomeStatmentService incomeStatmentService;
 
-        public TransactionsEntriesService(ITransactionRepo transactionRepo, BalanceService balanceService)
+        public TransactionsEntriesService( ITransactionRepo transactionRepo, BalanceService balanceService,  IncomeStatmentService incomeStatmentService)
         {
             this.transactionRepo = transactionRepo;
             this.balanceService = balanceService;
+            this.incomeStatmentService = incomeStatmentService;
         }
 
         public async Task CreateTransaction(Transaction transaction)
@@ -35,13 +38,22 @@ namespace AccountingSystem.Service.Transactions
 
             }
 
+            //TODO Add 10% revenue from goods
+            if(transaction.CrTransactionEntry == PossibleTransactions.Goods)
+            {
+                await incomeStatmentService.updateincomestatmentWithRevenue(transaction.CrTransactionEntryValue);
+            }
+
             transaction.Date = DateTime.Now;
 
 
             await transactionRepo.Create(transaction);
+            //Update IncomeStatment
 
+
+            //Update Balance Sheet
             await balanceService.UpdateLastBalance(transaction);
-       
+
             // Add To database
         }
     }
